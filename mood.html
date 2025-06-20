@@ -58,6 +58,17 @@
         </ul>
     </div>
 </section>
+<section id="compliment-section">
+    <h2>💖 A Compliment for You</h2>
+    <button id="get-compliment">Give me a smile 😊</button>
+    <p id="compliment-text"></p>
+</section>
+<section id="music-section">
+    <h2>🎶 Uplift Your Mood</h2>
+    <button id="play-music">Play a Happy Tune</button>
+    <audio id="happy-audio" src="https://www.bensound.com/bensound-music/bensound-sunny.mp3"></audio>
+</section>
+
 
 <script>
 $(document).ready(function () {
@@ -89,11 +100,14 @@ $(document).ready(function () {
         $("body").css("background-color", color);
     });
 
+
+
     // Form submission via AJAX
     $("#mood-form").submit(function (event) {
         event.preventDefault(); // Prevent page reload
 
         let moodNote = $("#mood-note").val();
+
 
         // Send data to PHP backend using AJAX
         $.ajax({
@@ -118,23 +132,54 @@ $(document).ready(function () {
         });
     });
 });
+
 $("#mood-select").change(function () {
-    const selected = $(this).val();
-    let message = "";
+    let mood = $(this).val();
+    let feedback = $("#mood-feedback");
 
-    switch (selected) {
-        case "low":
-            message = "😞 Take it easy, better days are ahead.";
-            break;
-        case "neutral":
-            message = "😐 A steady day can be a good thing.";
-            break;
-        case "happy":
-            message = "😊 Yay! Keep smiling!";
-            break;
+    if (mood === "happy") {
+        feedback.html(`
+            <p>That's wonderful! 😊 Stay joyful and spread the happiness!</p>
+            <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Happy dance" style="max-width: 300px;">
+        `);
+    } else if (mood === "neutral") {
+        feedback.html(`
+            <p>It's okay to feel neutral. Here's a little peaceful moment for you:</p>
+            <blockquote>"Take a deep breath. You’re doing fine."</blockquote>
+            <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3pzcm93ZXo0ODYyeHpvMmk2emVyZTNnb3ZjdmlpMDA5OGJxcnR4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/krP2NRkLqnKEg/giphy.gif" alt="Peaceful gif" style="max-width: 200px;">
+        `);
+    } else if (mood === "low") {
+        feedback.html(`
+            <p>Feeling low? Here’s a gentle reminder that you’re not alone 💛</p>
+            <blockquote>"You’ve made it this far, and that’s something to be proud of."</blockquote>
+            <img src="https://media.giphy.com/media/QvBoMEcQ7DQXK/giphy.gif" alt="Uplifting gif" style="max-width: 300px;">
+        `);
     }
+});
+const compliments = [
+    "You're doing amazing!",
+    "You light up the world 🌟",
+    "You're stronger than you think 💪",
+    "You matter. Always 💖",
+    "You’re a beautiful soul ✨",
+    "Today, you are enough 🌈"
+];
 
-    $("#mood-feedback").html(message);
+$("#get-compliment").click(function () {
+    let randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
+    $("#compliment-text").text(randomCompliment);
+});
+$("#play-music").click(function () {
+    const audio = $("#happy-audio")[0];
+
+    if (audio.paused) {
+        audio.play();
+        $(this).text("Stop the Music 🔇");
+    } else {
+        audio.pause();
+        audio.currentTime = 0; // Optional: reset to beginning
+        $(this).text("Play a Happy Tune");
+    }
 });
 
 </script>
