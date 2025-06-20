@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Life</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<header>
+    <h1>Happy Life</h1>
+    <p>Join our community and start your journey towards positivity.</p>
+</header>
+
+<center> 
+<nav>
+    <ul>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="mood.html">Mood</a></li>
+        <li><a href="contact.html">Contacts</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+</nav>
+</center>
+
+<main>
+    <section id="home">
+        <div class="hero-content">
+            <h2>Welcome to Happy Life</h2>
+            <p>Your mental health is our priority. Let’s work together for a brighter tomorrow.</p>
+            <button class="cta-button">Explore Resources</button>
+        </div>
+    </section>
+
+    <!-- Video Section below the hero content -->
+    <section id="video-section">
+                 <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </section>
+
+    <section id="emergency-alert">
+        <marquee scrollamount="19" scrolldelay="106">
+            <h2>Emergency Alert !!! Emergency Alert !!! Emergency Alert !!! Emergency Alert !!! Emergency Alert !!! Emergency Alert !!!</h2>
+        </marquee>
+        <p>If you feel unsafe or in crisis, press the button below to alert your emergency contacts.</p>
+        <button id="alert-button" class="alert-button">Send Emergency Alert</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Happy Life Project</p>
+    </footer>
+
+</main>
+
+<script>
+    $(document).ready(function () {
+
+        // Hide body first and fade it in
+        $("body").hide().fadeIn(1000);
+
+        // Blinking effect on emergency alert (only the h2 inside marquee)
+        setInterval(function () {
+            $("#emergency-alert h2").fadeOut(500).fadeIn(500);
+        }, 2000);
+
+        // Rotate text for the second header (h2)
+        let messages = [
+            "Welcome to Happy Life",
+            "Stay Positive, Stay Happy 😊",
+            "Your Journey to Happiness Starts Here"
+        ];
+        let index = 0;
+        setInterval(function () {
+            $("#home h2").fadeOut(500, function () {
+                $(this).text(messages[index]).fadeIn(500);
+            });
+            index = (index + 1) % messages.length;
+        }, 3000);
+
+        $(".cta-button").click(function () {
+            window.location.href = "resources.html"; // Redirects to resources.html
+        });
+
+        // Show emergency alert when the button is clicked and change the message
+        $("#alert-button").click(function () {
+            $("#emergency-alert").fadeIn(500, function () {
+                $("#emergency-alert p").text("You are safe now. The alert message is sent.");
+                $("#alert-button").hide(); // Hide button after clicking
+            });
+        });
+
+        // Fun hover effect on buttons
+        $("button").hover(function () {
+            $(this).css({
+                "background-color": "#ffcc00",
+                "transform": "scale(1.1)"
+            });
+        }, function () {
+            $(this).css({
+                "background-color": "",
+                "transform": "scale(1)"
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>

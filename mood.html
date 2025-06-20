@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Happy Life</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><a href="contact.html">Contacts</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="mood-assessment">
+    <h2>Mood Assessment</h2>
+    <p>How are you feeling today?</p>
+    <div class="dropdown">
+        <select id="mood-select">
+            <option value="" selected disabled>Select your mood</option>
+            <option value="low">Low</option>
+            <option value="neutral">Neutral</option>
+            <option value="happy">Happy</option>
+        </select>
+    </div>
+    <div class="mood-feedback" id="mood-feedback">
+        <!-- Feedback will appear here -->
+    </div>
+</section>
+
+<section id="mood-tracker">
+    <h2>Mood Tracker 😊</h2>
+    <form id="mood-form">
+        <label for="mood">How are you feeling today?</label>
+        <div id="emoji-picker">
+            <button type="button" class="emoji-btn" data-mood="Happy">😊</button>
+            <button type="button" class="emoji-btn" data-mood="Sad">😢</button>
+            <button type="button" class="emoji-btn" data-mood="Angry">😠</button>
+            <button type="button" class="emoji-btn" data-mood="Anxious">😟</button>
+            <button type="button" class="emoji-btn" data-mood="Neutral">😐</button>
+        </div>
+        <label for="mood-note">Notes (optional):</label>
+        <textarea id="mood-note" name="mood-note" placeholder="What’s on your mind?"></textarea>
+        <button type="submit">Log Mood</button>
+    </form>
+    <div id="mood-log">
+        <ul id="mood-entries">
+            <!-- Mood entries will appear here -->
+        </ul>
+    </div>
+</section>
+
+<script>
+$(document).ready(function () {
+    let selectedMood = '';
+
+    // Mood-based background color change
+    $(".emoji-btn").click(function () {
+        selectedMood = $(this).data("mood");
+        let color = "";
+
+        switch (selectedMood) {
+            case "Happy":
+                color = "#FFD700"; // Gold
+                break;
+            case "Sad":
+                color = "#87CEFA"; // Light Blue
+                break;
+            case "Angry":
+                color = "#FF6347"; // Tomato Red
+                break;
+            case "Anxious":
+                color = "#D8BFD8"; // Light Purple
+                break;
+            case "Neutral":
+                color = "#D3D3D3"; // Light Gray
+                break;
+        }
+
+        $("body").css("background-color", color);
+    });
+
+    // Form submission via AJAX
+    $("#mood-form").submit(function (event) {
+        event.preventDefault(); // Prevent page reload
+
+        let moodNote = $("#mood-note").val();
+
+        // Send data to PHP backend using AJAX
+        $.ajax({
+            type: "POST",
+            url: "submit_mood.php",
+            data: {
+                mood: selectedMood,
+                note: moodNote
+            },
+            success: function (response) {
+                // Append new mood entry to the mood log
+                let moodEntry = `<li><strong>${selectedMood}</strong>: ${moodNote}</li>`;
+                $("#mood-entries").append(moodEntry);
+
+                // Clear the form after submission
+                $("#mood-form")[0].reset();
+                selectedMood = ''; // Reset selected mood
+            },
+            error: function (xhr, status, error) {
+                console.error("Error logging mood:", error);
+            }
+        });
+    });
+});
+</script>
+
+<footer>
+    <p>&copy; 2025 Happy Life Project</p>
+</footer>
+
+</body>
+</html>

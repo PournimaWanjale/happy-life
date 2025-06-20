@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Happy life</title>
+    <link rel="stylesheet" href="style.css">
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+   
+   </head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+            <li><a href="mood.html">Mood</a></li>
+            <li><a href="contact.html">Contacts</a></li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<section id="resources">
+
+
+<h2>Helpful Resources</h2>
+    <div class="resource-cards">
+        <div class="card">
+            <h3>Self-Care Tips</h3>
+            <p>Discover simple ways to take care of your mental health every day.</p>
+            <button class="read-more" onclick="showResource('selfcare')">Read More</button>
+            <div id="selfcare" class="resource-detail">
+                <ul>
+                    <li>Take a walk outside to clear your mind.</li>
+                    <li>Stay hydrated and eat balanced meals.</li>
+                    <li>Try journaling your thoughts and feelings.</li>
+                    <li>Practice deep breathing exercises.</li>
+                    <li>Ensure you're getting enough sleep every night.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Online Therapy Platforms</h3>
+            <p>Explore trusted platforms for online therapy and professional help.</p>
+            <button class="read-more" onclick="showResource('therapy')">Learn More</button>
+            <div id="therapy" class="resource-detail">
+                <ul>
+                    <li><a href="https://www.betterhelp.com" target="_blank">BetterHelp</a> - Online counseling with licensed therapists.</li>
+                    <li><a href="https://www.talkspace.com" target="_blank">TalkSpace</a> - Connect with a therapist via text, audio, or video.</li>
+                    <li><a href="https://www.7cups.com" target="_blank">7 Cups</a> - Free emotional support from trained listeners.</li>
+                    <li><a href="https://www.reachout.com" target="_blank">ReachOut</a> - Mental health support for young people.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Mindfulness Exercises</h3>
+            <p>Practice mindfulness with guided meditations and breathing exercises.</p>
+            <button class="read-more" onclick="showResource('mindfulness')">Try Now</button>
+            <div id="mindfulness" class="resource-detail">
+                <ul>
+                    <li><a href="https://www.headspace.com" target="_blank">Headspace</a> - Guided meditation and mindfulness exercises.</li>
+                    <li><a href="https://www.calm.com" target="_blank">Calm</a> - Meditation, sleep stories, and relaxation exercises.</li>
+                    <li><a href="https://www.meditationoasis.com" target="_blank">Meditation Oasis</a> - Free guided meditations and mindfulness audio.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<footer>
+<script>
+$(document).ready(function () {
+    // Initially hide all resource details
+    $(".resource-detail").hide();
+
+    // Click event for Read More / Learn More buttons
+    $(".read-more").click(function () {
+        let targetId = $(this).next(".resource-detail"); // Get the associated resource detail
+
+        // Check if the clicked button is in the second box
+        if ($(this).parent().index() === 1) {
+            $("#selfcare").slideDown(600); // Slide in the first box's message
+        }
+
+        // Toggle the clicked resource detail
+        targetId.slideToggle(600);
+    });
+});
+</script>
+        <p>&copy; 2025 Happy Life Project</p>
+    </footer>
+
+</body>
+</html>
+

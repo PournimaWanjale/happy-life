@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Happy life</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+        .hidden { display: none; }
+        .fade-in { opacity: 0; transition: opacity 1s ease-in; }
+        .about-box, .team-box { cursor: pointer; }
+        .back-to-top { 
+            display: none; 
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+            background: #ffcc00; 
+            padding: 10px 15px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="contact.html">Contacts</a></li>
+                <li><a href="mood.html">Mood</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <header>
+        <h1 id="typing-header">🌟 About Us</h1>
+        <p>Learn more about our mission and team</p>
+    </header>
+
+    <div class="container">
+        <div class="about-box">
+            <h2>Our Mission</h2>
+            <p class="hidden">At Happy Life, we are dedicated to providing support and resources for individuals struggling with mental health. We believe that no one should feel alone in their journey toward happiness and well-being. Our platform offers helpful resources, emergency contacts, and self-care tools to guide you every step of the way.</p>
+        </div>
+
+        <div class="about-box">
+            <h2>Our Vision</h2>
+            <p class="hidden">Our vision is to create a world where mental health is given the same attention and care as physical health. We aim to break the stigma surrounding mental health, promote open conversations, and provide accessible tools for emotional and mental well-being.</p>
+        </div>
+
+        <div class="team-box">
+            <h2>Meet Our Team</h2>
+            <div class="team-member">
+                <h3>Pournima Wanjale & Amanpreet Singh Walia - Founders</h3>
+                <p>We are students of SY BBCA, passionate about mental health awareness. We started Happy Life with the goal of providing accessible support for everyone.</p>
+            </div>
+        </div>
+
+        <div class="back-home">
+            <a href="index.html">🏠 Back to Home</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Happy Life Project</p>
+    </footer>
+
+    <div class="back-to-top">⬆ Back to Top</div>
+
+    <script>
+        $(document).ready(function() {
+    // Smooth fade-in effect for sections
+    $(".about-box, .team-box").addClass("fade-in").css("opacity", "1");
+
+    // Accordion effect
+    $(".about-box h2").click(function() {
+        $(this).next("p").slideToggle();
+    });
+
+    // Typing effect for header
+    let text = "🌟 About Us";
+    let index = 0;
+    function typeText() {
+        if (index < text.length) {
+            $("#typing-header").text(text.substring(0, index + 1));
+            index++;
+            setTimeout(typeText, 100);
+        }
+    }
+    typeText();
+
+    // Show back-to-top button when scrolling
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 100) {
+            $(".back-to-top").fadeIn();
+        } else {
+            $(".back-to-top").fadeOut();
+        }
+    });
+
+    // Smooth scroll to top
+    $(".back-to-top").click(function() {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+    });
+
+    // Make titles interactive by animating them on hover
+    $(".about-box h2, .team-box h2").hover(
+        function() {
+            $(this).animate(
+                {
+                    marginLeft: "10px",  // Slide right effect
+                    fontSize: "1.9em"    // Slightly increase font size
+                },
+                200  // Duration of the animation
+            );
+            $(this).css("cursor", "pointer"); // Change the cursor to indicate it's clickable
+        },
+        function() {
+            $(this).animate(
+                {
+                    marginLeft: "0px",  // Return to original position
+                    fontSize: "1.8em"   // Original font size
+                },
+                200
+            );
+        }
+    );
+});
+
+    </script>
+
+</body>
+</html>

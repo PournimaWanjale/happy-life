@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Happy life</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+        .success-message {
+            display: none;
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="mood.html">Mood</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="contacts">
+        <h2 id="emergency-header">Emergency Contacts</h2>
+        <div class="contacts-container">
+            <div class="contact-card">
+                <h3>National Helpline</h3>
+                <p>Call: 1800-123-456</p>
+                <p>Available 24/7 for immediate help.</p>
+            </div>
+            <div class="contact-card">
+                <h3>Local Mental Health Clinic</h3>
+                <p>Address: 123 Happy St, Wellness City</p>
+                <p>Phone: +91-9876543210</p>
+            </div>
+            <div class="contact-card">
+                <h3>Add Your Contact</h3>
+                <form id="contact-form" method="POST">
+    <input type="text" name="name" placeholder="Contact Name" required />
+    <input type="tel" name="phone" placeholder="Phone Number" required />
+    <button type="submit">Add Contact</button>
+</form>
+<p class="success-message">Contact saved successfully!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Happy Life Project</p>
+    </footer>
+
+    <script>
+        $(document).ready(function(){
+    // Blinking Emergency Contacts Header
+    setInterval(function() {
+        $("#emergency-header").fadeOut(500).fadeIn(500);
+    }, 1000);
+
+    // Contact form submission via AJAX
+    $("#contact-form").submit(function(event) {
+        event.preventDefault(); // Prevent form refresh
+
+        // Get form data
+        const formData = {
+            name: $("input[name='name']").val(),
+            phone: $("input[name='phone']").val()
+        };
+
+        // Send AJAX POST request to the PHP backend
+        $.ajax({
+            url: "submit_contact.php", // PHP script to handle the request
+            type: "POST",
+            data: formData,
+            dataType: "json", // Expect JSON response
+            success: function(response) {
+                if (response.message) {
+                    $(".success-message").text(response.message).slideDown().delay(2000).slideUp();
+                    $("#contact-form")[0].reset(); // Reset form fields
+                } else if (response.error) {
+                    alert(response.error); // Show error message
+                }
+            },
+            error: function() {
+                alert("There was an error submitting the contact. Please try again.");
+            }
+        });
+    });
+
+    // Active nav link
+    $("nav a").click(function(){
+        $("nav a").removeClass("active");
+        $(this).addClass("active");
+    });
+});
+    </script>
+
+</body>
+</html>
