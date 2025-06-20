@@ -118,6 +118,25 @@ $(document).ready(function () {
         });
     });
 });
+$("#mood-select").change(function () {
+    const selected = $(this).val();
+    let message = "";
+
+    switch (selected) {
+        case "low":
+            message = "😞 Take it easy, better days are ahead.";
+            break;
+        case "neutral":
+            message = "😐 A steady day can be a good thing.";
+            break;
+        case "happy":
+            message = "😊 Yay! Keep smiling!";
+            break;
+    }
+
+    $("#mood-feedback").html(message);
+});
+
 </script>
 
 <footer>
