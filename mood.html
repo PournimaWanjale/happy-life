@@ -101,36 +101,24 @@ $(document).ready(function () {
     });
 
 
+// Fake Mood form submission (no backend)
+$("#mood-form").submit(function (event) {
+    event.preventDefault(); // Prevent page reload
 
-    // Form submission via AJAX
-    $("#mood-form").submit(function (event) {
-        event.preventDefault(); // Prevent page reload
+    const moodNote = $("#mood-note").val();
 
-        let moodNote = $("#mood-note").val();
+    if (!selectedMood) {
+        alert("Please select a mood using the emojis before logging.");
+        return;
+    }
 
+    const moodEntry = `<li><strong>${selectedMood}</strong>: ${moodNote}</li>`;
+    $("#mood-entries").append(moodEntry);
 
-        // Send data to PHP backend using AJAX
-        $.ajax({
-            type: "POST",
-            url: "submit_mood.php",
-            data: {
-                mood: selectedMood,
-                note: moodNote
-            },
-            success: function (response) {
-                // Append new mood entry to the mood log
-                let moodEntry = `<li><strong>${selectedMood}</strong>: ${moodNote}</li>`;
-                $("#mood-entries").append(moodEntry);
-
-                // Clear the form after submission
-                $("#mood-form")[0].reset();
-                selectedMood = ''; // Reset selected mood
-            },
-            error: function (xhr, status, error) {
-                console.error("Error logging mood:", error);
-            }
-        });
-    });
+    // Show a success-like effect (optional)
+    $("#mood-form")[0].reset();
+    selectedMood = '';
+});
 });
 
 $("#mood-select").change(function () {

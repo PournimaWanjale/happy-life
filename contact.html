@@ -65,35 +65,14 @@
         $("#emergency-header").fadeOut(500).fadeIn(500);
     }, 1000);
 
-    // Contact form submission via AJAX
-    $("#contact-form").submit(function(event) {
-        event.preventDefault(); // Prevent form refresh
+    // Fake contact form submission (no backend)
+$("#contact-form").submit(function(event) {
+    event.preventDefault(); // Prevent form refresh
 
-        // Get form data
-        const formData = {
-            name: $("input[name='name']").val(),
-            phone: $("input[name='phone']").val()
-        };
-
-        // Send AJAX POST request to the PHP backend
-        $.ajax({
-            url: "submit_contact.php", // PHP script to handle the request
-            type: "POST",
-            data: formData,
-            dataType: "json", // Expect JSON response
-            success: function(response) {
-                if (response.message) {
-                    $(".success-message").text(response.message).slideDown().delay(2000).slideUp();
-                    $("#contact-form")[0].reset(); // Reset form fields
-                } else if (response.error) {
-                    alert(response.error); // Show error message
-                }
-            },
-            error: function() {
-                alert("There was an error submitting the contact. Please try again.");
-            }
-        });
-    });
+    // Just show success message and reset form
+    $(".success-message").text("Contact saved successfully!").slideDown().delay(2000).slideUp();
+    $("#contact-form")[0].reset();
+});
 
     // Active nav link
     $("nav a").click(function(){
