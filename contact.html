@@ -1,114 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - Happy Life</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .success-message {
-      display: none;
-      font-weight: bold;
-      margin-top: 10px;
-      padding: 8px;
-      border-radius: 5px;
-      background: #f0f0f0;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Happy life</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+        .success-message {
+            display: none;
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="homepage.html">Home</a></li>
-        <li><a href="resources.html">Resources</a></li>
-        <li><a href="mood.html">Mood Journal</a></li>
-        <li><a href="about.html">About</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <section id="contacts">
-    <h2 id="emergency-header">Emergency Contacts</h2>
-    <div class="contacts-container">
-      <div class="contact-card">
-        <h3>National Helpline</h3>
-        <p>Call: 14416 or 1-800-891-4416</p>
-        <p>For immediate mental health support in India, you can dial the 24/7 toll-free helpline number.</p>
-      </div>
-      <div class="contact-card">
-        <h3>Jagruti Rehabilitation Center</h3>
-        <p>Address: Jagruti Rehabilitation Centre, Pune Solapur Road, Hadapsar, Pune - 411028.</p>
-        <p>Website: www.jagrutirehab.org</p>
-      </div>
-      <div class="contact-card">
-        <h3>Add Your Contact</h3>
-        <form id="contactForm">
-          <input type="text" id="name" placeholder="Contact Name" required />
-          <input type="tel" id="phone" placeholder="Phone Number" required />
-          <button type="submit">Add Contact</button>
-        </form>
-        <p class="success-message" id="statusMsg"></p>
-      </div>
-    </div>
-  </section>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="mood.html">Mood</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <section id="quick-dial">
-    <h2>Quick Help 📞</h2>
-    <a href="tel:14416" class="dial-btn">Call National Helpline</a>
-    <a href="tel:18008914416" class="dial-btn">Call Mental Health Line</a>
-  </section>
+    <section id="contacts">
+        <h2 id="emergency-header">Emergency Contacts</h2>
+        <div class="contacts-container">
+            <div class="contact-card">
+                <h3>National Helpline</h3>
+                <p>Call: 14416 or 1-800-891-4416</p>
+                <p>For immediate mental health support in India, you can dial the 24/7 toll-free helpline number.</p>
+            </div>
+            <div class="contact-card">
+                <h3>Jagruti Rehabilitation Center</h3>
+                <p>Address: Jagruti Rehabilitation Centre, Pune Solapur Road, Hadapsar, Pune - 411028 (Opposite Krishi Tantra Vidyalaya, Sitai Hake Nagar). </p>
+                <p>Website: www.jagrutirehab.org </p>
+            </div>
+            <div class="contact-card">
+                <h3>Add Your Contact</h3>
+                <form id="contact-form" method="POST">
+    <input type="text" name="name" placeholder="Contact Name" required />
+    <input type="tel" name="phone" placeholder="Phone Number" required />
+    <button type="submit">Add Contact</button>
+</form>
+<p class="success-message">Contact saved successfully!</p>
+            </div>
+        </div>
+    </section>
 
-  <section id="local-support">
-    <h2>Local & Online Support 🌐</h2>
-    <ul>
-      <li><a href="https://maps.google.com/?q=Mental+Health+Counselor+Pune" target="_blank">🗺️ Find Counselors Near You (Pune)</a></li>
-      <li><a href="https://www.mhpss.net" target="_blank">🌐 Global Mental Health Support</a></li>
-    </ul>
-  </section>
+    <footer>
+        <p>&copy; 2025 Happy Life Project</p>
+    </footer>
 
-  <footer>
-    <p>&copy; 2025 Happy Life Project</p>
-  </footer>
+   <script>
+    $(document).ready(function () {
+      // Fake contact form submission (no backend)
+      $("#contact-form").submit(function (event) {
+        event.preventDefault(); // Prevent page reload
+        $(".success-message").text("Contact saved successfully!").slideDown().delay(2000).slideUp();
+        $("#contact-form")[0].reset();
+      });
 
-  <script>
-    document.getElementById('contactForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const statusMsg = document.getElementById('statusMsg');
-
-      if (!name || !phone) {
-        statusMsg.style.display = "block";
-        statusMsg.style.color = "red";
-        statusMsg.innerText = "Please fill all fields.";
-        return;
-      }
-
-      try {
-        const res = await fetch('contact.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, phone })
-        });
-
-        const data = await res.json();
-        statusMsg.style.display = "block";
-        statusMsg.style.color = data.success ? "green" : "red";
-        statusMsg.innerText = data.message;
-
-        if (data.success) {
-          document.getElementById('contactForm').reset();
-        }
-      } catch (err) {
-        console.error(err);
-        statusMsg.style.display = "block";
-        statusMsg.style.color = "red";
-        statusMsg.innerText = "Server error. Try again!";
-      }
+      // Active nav link
+      $("nav a").click(function () {
+        $("nav a").removeClass("active");
+        $(this).addClass("active");
+      });
     });
   </script>
+
 </body>
 </html>
