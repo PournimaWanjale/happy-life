@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Happy life</title>
+    <title>Resources - Happy life</title>
     <link rel="stylesheet" href="style.css">
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js" defer></script>
@@ -15,8 +15,8 @@
     <header>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-            <li><a href="mood.html">Mood</a></li>
+                <li><a href="homepage.html">Home</a></li>
+            <li><a href="mood.html">Mood Journal</a></li>
             <li><a href="contact.html">Contacts</a></li>
               <li><a href="about.html">About</a></li>
             </ul>
@@ -49,10 +49,10 @@
             <button class="read-more" onclick="showResource('therapy')">Learn More</button>
             <div id="therapy" class="resource-detail">
                 <ul>
-                    <li><a href="https://www.betterhelp.com" target="_blank">BetterHelp</a> - Online counseling with licensed therapists.</li>
-                    <li><a href="https://www.talkspace.com" target="_blank">TalkSpace</a> - Connect with a therapist via text, audio, or video.</li>
-                    <li><a href="https://www.7cups.com" target="_blank">7 Cups</a> - Free emotional support from trained listeners.</li>
-                    <li><a href="https://www.reachout.com" target="_blank">ReachOut</a> - Mental health support for young people.</li>
+                    <li><a href="https://www.betterhelp.com" class="resource-link" target="_blank">BetterHelp</a> - Online counseling with licensed therapists.</li>
+                    <li><a href="https://www.talkspace.com" class="resource-link" target="_blank">TalkSpace</a> - Connect with a therapist via text, audio, or video.</li>
+                    <li><a href="https://www.7cups.com" class="resource-link" target="_blank">7 Cups</a> - Free emotional support from trained listeners.</li>
+                    <li><a href="https://www.reachout.com" class="resource-link" target="_blank">ReachOut</a> - Mental health support for young people.</li>
                 </ul>
             </div>
         </div>
@@ -63,9 +63,9 @@
             <button class="read-more" onclick="showResource('mindfulness')">Try Now</button>
             <div id="mindfulness" class="resource-detail">
                 <ul>
-                    <li><a href="https://www.headspace.com" target="_blank">Headspace</a> - Guided meditation and mindfulness exercises.</li>
-                    <li><a href="https://www.calm.com" target="_blank">Calm</a> - Meditation, sleep stories, and relaxation exercises.</li>
-                    <li><a href="https://www.meditationoasis.com" target="_blank">Meditation Oasis</a> - Free guided meditations and mindfulness audio.</li>
+                    <li><a href="https://www.headspace.com" class="resource-link" target="_blank">Headspace</a> - Guided meditation and mindfulness exercises.</li>
+                    <li><a href="https://www.calm.com" class="resource-link" target="_blank">Calm</a> - Meditation, sleep stories, and relaxation exercises.</li>
+                    <li><a href="https://www.meditationoasis.com" class="resource-link" target="_blank">Meditation Oasis</a> - Free guided meditations and mindfulness audio.</li>
                 </ul>
             </div>
         </div>
@@ -73,23 +73,21 @@
 </section>
 <footer>
 <script>
-$(document).ready(function () {
-    // Initially hide all resource details
-    $(".resource-detail").hide();
+function showResource(id) {
+  // Hide all resource details first
+  const allDetails = document.querySelectorAll('.resource-detail');
+  allDetails.forEach(detail => {
+    detail.style.display = 'none';
+  });
 
-    // Click event for Read More / Learn More buttons
-    $(".read-more").click(function () {
-        let targetId = $(this).next(".resource-detail"); // Get the associated resource detail
-
-        // Check if the clicked button is in the second box
-        if ($(this).parent().index() === 1) {
-            $("#selfcare").slideDown(600); // Slide in the first box's message
-        }
-
-        // Toggle the clicked resource detail
-        targetId.slideToggle(600);
-    });
-});
+  // Toggle the selected resource
+  const selected = document.getElementById(id);
+  if (selected.style.display === 'block') {
+    selected.style.display = 'none';
+  } else {
+    selected.style.display = 'block';
+  }
+}
 </script>
         <p>&copy; 2025 Happy Life Project</p>
     </footer>

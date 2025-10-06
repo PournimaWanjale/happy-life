@@ -1,41 +1,31 @@
-const express = require("express");
-const mysql = require("mysql");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
-
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "", // Change if needed
-    database: "happy_life",
+// Register
+document.getElementById('signupBtn').addEventListener('click', async () => {
+  const name = document.getElementById('signupName').value.trim();
+  const email= document.getElementById('signupEmail').value.trim();
+  const pass = document.getElementById('signupPass').value.trim();
+  const res = await fetch('php/register.php', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({name,email,password:pass})
+  });
+  const data = await res.json();
+  document.getElementById('signupMsg').innerText = data.message;
 });
 
-db.connect(err => {
-    if (err) throw err;
-    console.log("Connected to MySQL database");
-});
-
-app.post("/save_contact", (req, res) => {
-    const { name, phone } = req.body;
-
-    if (!name || !phone) {
-        return res.status(400).json({ status: "error", message: "All fields are required" });
-    }
-
-    const sql = "INSERT INTO contacts (name, phone) VALUES (?, ?)";
-    db.query(sql, [name, phone], (err, result) => {
-        if (err) {
-            res.status(500).json({ status: "error", message: "Failed to save contact" });
-        } else {
-            res.json({ status: "success", message: "Contact saved successfully!" });
-        }
-    });
-});
-
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
+// Login
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  const email= document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+  const res = await fetch('php/login.php', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({email,password:pass})
+  });
+  const data = await res.json();
+  document.getElementById('loginMsg').innerText = data.message;
+  if (data.success) {
+    // redirect based on role
+    if (data.role === 'admin') window.location = 'admin_dashboard.php';
+    else window.location = 'user_dashboard.php';
+  }
 });
